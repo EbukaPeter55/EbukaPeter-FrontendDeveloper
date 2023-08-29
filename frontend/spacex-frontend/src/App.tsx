@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
-import Landing from './pages/Landing/Lading.component'
+import Landing from './pages/Landing/Landing.component'
 
 function App() {
   const [count, setCount] = useState(0)

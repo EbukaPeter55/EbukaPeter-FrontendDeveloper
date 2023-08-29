@@ -1,3 +1,21 @@
-header{
-    
+.spacex-container{
+    .spacexdata-wrapper{
+        max-width: 65rem;
+        margin: 2rem auto 0 auto;
+        width: 100%;
+        display: grid;
+        grid-gap: 15px;
+        grid-template-columns: repeat(auto-fit, minmax(18.3rem, 1fr));
+
+        &__card{
+            max-width: 20rem;
+            height: 17.9rem;
+            padding: 1rem;
+            background: #ffffff;
+            margin-bottom: 1.5rem;
+            border-radius: .8rem;
+            box-shadow: 11.423728942871094px 38.840675354003906px 84.53559112548828px 0px rgba(135, 152, 173, 0.29);
+            cursor: pointer;
+        }
+    }
 }
