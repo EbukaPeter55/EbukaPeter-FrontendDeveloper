@@ -1,9 +1,12 @@
 <?php
 // This PHP script handles fetching data for all or a single SpaceX capsule with pagination.
 
-// Allow CORS requests from your React app and Postman
-header("Access-Control-Allow-Origin: http://localhost:3000");
-header("Access-Control-Allow-Origin: https://www.getpostman.com");
+
+// Allow requests from any origin
+header("Access-Control-Allow-Origin: *");
+
+// Allow specific HTTP methods (e.g., GET, POST, OPTIONS, etc.)
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 
 // Define the SpaceX API endpoint for capsules
 $spacex_url = 'https://api.spacexdata.com/v3/capsules';

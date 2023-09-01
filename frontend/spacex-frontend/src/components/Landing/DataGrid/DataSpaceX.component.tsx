@@ -1,18 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import "../../../components/component.styles.scss";
+import { fetchSpaceXData } from "../../../redux/capsule";
 import { CAPSULES } from "./data";
 
 const DataSpaceX = () => {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const capsulesPerPage = 5; 
   const [currentPage, setCurrentPage] = useState(1);
+  const capsules = useSelector((state: any) => state.capsule.capsules);
+  const loading = useSelector((state: any) => state.capsule.loading);
+  const dispatch:any = useDispatch();
+
+  useEffect(() => {
+    // Dispatch the fetchSpaceXData thunk when the component mounts
+    dispatch(fetchSpaceXData());
+  }, [dispatch]);
+
+  useEffect(() => {
+    console.log('capsule data', capsules);
+  }, [capsules]);
 
   // Calculate the indices for the current page
   const startIndex = (currentPage - 1) * capsulesPerPage;
   const endIndex = startIndex + capsulesPerPage;
 
-  const capsules: any[] = CAPSULES[0].slice(startIndex, endIndex);
-  console.log("capsules", capsules);
+  // const capsules: any[] = CAPSULES[0].slice(startIndex, endIndex);
+  // console.log("capsules", capsules);
 
   // Calculate the total number of pages
   const totalPages = Math.ceil(CAPSULES[0].length / capsulesPerPage);
@@ -59,7 +73,15 @@ const DataSpaceX = () => {
         ""
       )}
       <div className="spacexdata-wrapper">
-        {capsules.map((capsule: any, index: number) => (
+
+      {loading ? ( // Conditionally render the loading spinner
+        <div className="spacexdata-wrapper__loadingspinnger">
+          {/* You can replace this with your loading spinner component */}
+         <p> Loading... </p>
+        </div>
+      ) : (
+        // Render your data when it's not loading
+        Array.isArray(capsules) && capsules.map((capsule: any, index: number) => (
           <div key={index} className="spacexdata-wrapper__card"
           onClick={handleOpenModal}>
             <div className="spacexdata-content">
@@ -78,7 +100,9 @@ const DataSpaceX = () => {
               </div>
             </div>
           </div>
-        ))}
+        ))
+      )}
+        
       </div>
       {/* Pagination Controls */}
     <div className="pagination flex justify-center gap-2 mt-2">
