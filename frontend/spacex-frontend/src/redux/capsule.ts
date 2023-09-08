@@ -1,14 +1,17 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
+import BASE_URL from "../api.config";
 import { AppThunk } from "./store";
 
 interface CapsuleState {
   capsules: any[];
+  capsule: any;
   loading: boolean;
 }
 
 const initialState: CapsuleState = {
   capsules: [],
+  capsule: {},
   loading: false,
 };
 
@@ -26,19 +29,88 @@ const capsule = createSlice({
     getCapsulesFail: (state) => {
       state.loading = false;
     },
+    getCapsule: (state) => {
+      state.loading = true;
+    },
+    getCapsuleSuccess: (state, action: PayloadAction<any[]>) => {
+      state.loading = false;
+      state.capsule = action.payload;
+    },
+    getCapsuleFail: (state) => {
+      state.loading = false;
+    },
   },
 });
 
-export const { getCapsules, getCapsulesSuccess, getCapsulesFail } = capsule.actions;
+export const { getCapsules, getCapsulesSuccess, getCapsulesFail, getCapsule, getCapsuleSuccess, getCapsuleFail } = capsule.actions;
 
-// Define an async thunk using AppThunk
-export const fetchSpaceXData = (): AppThunk => async (dispatch:any) => {
+// export const fetchSpaceXData = (limit: number, page: number, searchCriteria: any): AppThunk => async (dispatch: any) => {
+//   dispatch(getCapsules()); // Dispatch the loading action
+//   try {
+//     // Construct the URL with search criteria
+//     const { status, type, original_launch } = searchCriteria;
+//     const url = `${BASE_URL}?limit=${limit}&page=${page}&search={"status": "${status}", "type": "${type}", "original_launch": "${original_launch}"}`;
+//     const response = await axios.get(url);
+//     dispatch(getCapsulesSuccess(response.data)); // Dispatch success action with the data
+//     console.log('response', response);
+//   } catch (error) {
+//     console.error(error);
+//     dispatch(getCapsulesFail()); // Dispatch failure action
+//   }
+// };
+
+// export const fetchSpaceXData = (limit: number, page: number, searchCriteria: any): AppThunk => async (dispatch: any) => {
+//   dispatch(getCapsules()); // Dispatch the loading action
+//   try {
+//     // Construct the URL without the search criteria if nothing is selected
+//     const { status, type, original_launch } = searchCriteria;
+//     let url = `${BASE_URL}?limit=${limit}&page=${page}`;
+    
+//     // Check if any search criteria are selected
+//     if (status || type || original_launch) {
+//       // Append the search criteria to the URL
+//       url += `&search={"status": "${status}", "type": "${type}", "original_launch": "${original_launch}"}`;
+//     }
+
+//     const response = await axios.get(url);
+//     dispatch(getCapsulesSuccess(response.data)); // Dispatch success action with the data
+//     console.log('response', response);
+//   } catch (error) {
+//     console.error(error);
+//     dispatch(getCapsulesFail()); // Dispatch failure action
+//   }
+// };
+
+export const fetchSpaceXData = (limit: number, page: number, searchCriteria: any): AppThunk => async (dispatch: any) => {
   dispatch(getCapsules()); // Dispatch the loading action
-
   try {
-    const response = await axios.get(
-      'https://0961-2a09-bac5-4da3-15c3-00-22b-2d.ngrok-free.app/sociopay/test2.php'
-    );
+    // Construct the URL without the search criteria if nothing is selected
+    let url = `${BASE_URL}?limit=${limit}&page=${page}`;
+
+    const { status, type, original_launch } = searchCriteria;
+
+    // Create an object to store the selected search criteria
+    const selectedCriteria: any = {};
+
+    // Check if each field has a value and add it to the selectedCriteria object
+    if (status) {
+      selectedCriteria.status = status;
+    }
+    if (type) {
+      selectedCriteria.type = type;
+    }
+    if (original_launch) {
+      selectedCriteria.original_launch = original_launch;
+    }
+
+    // Check if there are any selected search criteria
+    if (Object.keys(selectedCriteria).length > 0) {
+      // Convert the selectedCriteria object to a JSON string and append it to the URL
+      const searchCriteriaJSON = JSON.stringify(selectedCriteria);
+      url += `&search=${encodeURIComponent(searchCriteriaJSON)}`;
+    }
+
+    const response = await axios.get(url);
     dispatch(getCapsulesSuccess(response.data)); // Dispatch success action with the data
     console.log('response', response);
   } catch (error) {
@@ -46,5 +118,24 @@ export const fetchSpaceXData = (): AppThunk => async (dispatch:any) => {
     dispatch(getCapsulesFail()); // Dispatch failure action
   }
 };
+
+
+
+
+export const fetchSpaceXDataDetails = (capsuleId: any): AppThunk => async (dispatch: any) => {
+  console.log('Fetching details for capsule:', capsuleId); // Add this line
+  dispatch(getCapsule()); // Dispatch the loading action
+  try {
+    const response = await axios.get(`${BASE_URL}?id=${capsuleId}`);
+    console.log('capusule detail response', response)
+    console.log('Fetched details:', response.data); // Add this line
+    dispatch(getCapsuleSuccess(response.data)); // Dispatch success action with the data
+    console.log('Capsule details updated in the state.'); // Add this line
+  } catch (error) {
+    console.error(error);
+    dispatch(getCapsuleFail()); // Dispatch failure action
+  }
+};
+
 
 export default capsule.reducer;
