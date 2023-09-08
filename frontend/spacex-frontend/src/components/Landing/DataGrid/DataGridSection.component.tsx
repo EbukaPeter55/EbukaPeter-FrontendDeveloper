@@ -6,7 +6,6 @@ const DataGridSection = () => {
     return (
         <div className='mt-10'>
             <SearchForm/>
-            <DataSpaceX/>
         </div>
     )
 }

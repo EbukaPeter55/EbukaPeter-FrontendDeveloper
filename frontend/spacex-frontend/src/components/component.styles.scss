@@ -1,71 +1,94 @@
-.spacex-container{
-    .spacexdata-wrapper{
-        max-width: 65rem;
-        margin: 2rem auto 0 auto;
-        width: 100%;
-        display: grid;
-        grid-gap: 15px;
-        grid-template-columns: repeat(auto-fill, minmax(18.3rem, 1fr));
+.spacex-container {
+  .spacexdata-wrapper {
+    max-width: 65rem;
+    margin: 2rem auto 0 auto;
+    width: 100%;
+    display: grid;
+    grid-gap: 15px;
+    grid-template-columns: repeat(auto-fill, minmax(18.3rem, 1fr));
 
-        &__card{
-            height: 17.9rem;
-            padding: 1rem;
-            background: #ffffff;
-            margin-bottom: 1.5rem;
-            border-radius: .8rem;
-            box-shadow: 11.423728942871094px 38.840675354003906px 84.53559112548828px 0px rgba(135, 152, 173, 0.29);
-            cursor: pointer;
-        }
-
-        .spacexdata-content{
-            position: relative;
-            &__status{
-                display:flex;
-                justify-content: flex-end;
-
-                div{
-                    width: 100%;
-                    max-width: 5rem;
-                    border-radius: 5px;
-                    padding: .4rem 0;
-
-                    h6{
-                        font-size: .8rem;
-                        text-align: center;
-                    }
-                }
-              
-                .active-status{
-                    background: #90EE90;
-                }
-                .unkown-satatus {
-                    background: #808080;
-                }
-                .retired-status {
-                    background: #FFD700;
-                }
-            }
-
-            &__body{
-                margin-top: 3rem;
-
-                h3{
-                    font-weight: 600;
-                }
-                p{
-                    margin-top: 1rem;
-                    font-size: .9rem;
-                }
-            }
-
-            &__date{
-                position: absolute;
-            }
-        }
+    &__card {
+      height: 17.9rem;
+      padding: 1rem;
+      background: #ffffff;
+      margin-bottom: 1.5rem;
+      border-radius: 0.8rem;
+      box-shadow: 11.423728942871094px 38.840675354003906px 84.53559112548828px
+        0px rgba(135, 152, 173, 0.29);
+      cursor: pointer;
     }
 
+    .spacexdata-content {
+      position: relative;
+      &__status {
+        display: flex;
+        justify-content: flex-end;
 
-.deletemodaloverlay {
+        div {
+          width: 100%;
+          max-width: 5rem;
+          border-radius: 5px;
+          padding: 0.4rem 0;
+
+          h6 {
+            font-size: 0.8rem;
+            text-align: center;
+          }
+        }
+
+        .active-status {
+          background: #90ee90;
+        }
+        .unkown-satatus {
+          background: #808080;
+        }
+        .retired-status {
+          background: #ffd700;
+        }
+      }
+
+      &__body {
+        margin-top: 3rem;
+
+        h3 {
+          font-weight: 600;
+        }
+        p {
+          margin-top: 1rem;
+          font-size: 0.9rem;
+        }
+      }
+
+      &__date {
+        position: absolute;
+      }
+
+      &__cardheader {
+        h3 {
+          font-weight: 600;
+          font-size: 1rem;
+          margin-top: 1rem;
+        }
+      }
+
+      &__bodytext {
+        p {
+          margin-top: 2rem;
+          font-size: 0.875;
+        }
+      }
+    }
+
+    .spacexdata-wrapper__loadingspinnger {
+      width: 100%;
+
+      p {
+        margin: 0 auto;
+      }
+    }
+  }
+
+  .deletemodaloverlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -74,7 +97,7 @@
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 1;
   }
-  
+
   .deleteModal {
     position: fixed;
     top: 25%;
@@ -85,35 +108,68 @@
     border-radius: 5px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     z-index: 3;
-  
+
     &__buttonwrapper {
       margin-top: 3rem;
-  
+
       &--okbutton {
-        background: linear-gradient(180deg, #10B2B4 35.61%, #0970AA 209.65%);
-        ;
+        background: linear-gradient(180deg, #10b2b4 35.61%, #0970aa 209.65%);
         border: none;
         border-radius: 5px;
-        color: #FFFFFF;
-        padding: .5rem 2.5rem;
+        color: #ffffff;
+        padding: 0.5rem 2.5rem;
         cursor: pointer;
       }
-  
+
       &--cancelbutton {
-        background: #FFFFFF;
-        border: 1px solid #10B2B4;
+        background: #ffffff;
+        border: 1px solid #10b2b4;
         border-radius: 5px;
-        color: linear-gradient(180deg, #10B2B4 35.61%, #0970AA 209.65%);
-        ;
-        padding: .5rem 1.5rem;
+        color: linear-gradient(180deg, #10b2b4 35.61%, #0970aa 209.65%);
+        padding: 0.5rem 1.5rem;
         cursor: pointer;
       }
     }
-  
+
     h3 {
-      font-size: .875rem;
+      font-size: 0.875rem;
       text-align: center;
       font-weight: 500;
+    }
+
+    .modal-body {
+      h2 {
+        font-weight: 600;
+        font-size: 1rem;
+      }
+
+      &__wrapper {
+        margin-top: 1.5rem;
+
+        .modal-heading {
+          font-size: 0.875rem;
+
+          h6 {
+            font-weight: 600;
+          }
+
+          p {
+            font-weight: 400;
+          }
+        }
+
+        .modal-update {
+          h6 {
+            font-weight: 600;
+            margin-top: 1.5rem;
+            font-size: 0.875rem;
+          }
+
+          p {
+            font-size: 0.875rem;
+          }
+        }
+      }
     }
   }
 }
