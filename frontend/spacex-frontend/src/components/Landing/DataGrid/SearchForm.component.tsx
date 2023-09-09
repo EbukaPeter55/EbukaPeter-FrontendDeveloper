@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSpaceXData } from '../../../redux/capsule';
 import DataSpaceX from './DataSpaceX.component';
-
+import "../../../components/component.styles.scss";
 
 const SearchForm = () => {
     const capsulesPerPage = 10;
@@ -49,11 +49,11 @@ const SearchForm = () => {
 
     return (
         <section className='w-full'>
-        <h2 className='text-center'>Data grid</h2>
-        <div className="flex flex-col md:flex-row md:items-center md:justify-center w-full">
-        <form onSubmit={handleSearchSubmit} className="relative w-full md:w-96">
-          <div className="flex space-x-2 w-full">
-            <div className="relative flex-1">
+        <h2 className='text-center font-bold text-3xl'>Search Capsules</h2>
+        <div className="flex mx-auto md:flex-row md:items-center md:justify-center max-w-[60rem] mt-4">
+        <form onSubmit={handleSearchSubmit} className="relative w-full">
+          <div className="flex space-x-2 flex-wrap justify-center ">
+            <div className="flex-1">
               <select
                 name="status"
                 value={searchCriteria.status}
@@ -85,7 +85,8 @@ const SearchForm = () => {
                 value={searchCriteria.type}
                 onChange={handleSearchInputChange}
                 className="border py-2 px-4 appearance-none focus:outline-none focus:ring focus:border-blue-500 w-full"
-              >
+                data-testid="status-input"
+             >
                 <option value="">Type</option>
                 <option value="Dragon 1.0">Dragon 1.0</option>
                 <option value="Dragon 1.1">Dragon 1.1</option>
@@ -94,7 +95,8 @@ const SearchForm = () => {
             <div className="">
               <button
                 type="submit"
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+                data-testid="submit-button"
+                className="bg-[#020528] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
               >
                 Search
               </button>

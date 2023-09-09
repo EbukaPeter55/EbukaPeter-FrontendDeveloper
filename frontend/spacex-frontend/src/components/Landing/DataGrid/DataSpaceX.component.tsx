@@ -2,10 +2,11 @@ import React, { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "../../../components/component.styles.scss";
 import { fetchSpaceXData, fetchSpaceXDataDetails } from "../../../redux/capsule";
+import { Capsule } from "../../../redux/types/capsules";
 import { CAPSULES } from "./data";
 
 interface CapsuleProps {
-  capsules: any[];
+  capsules: Capsule;
   currentPage:number;
   onPageChange:(newPage: number)=> void;
 }

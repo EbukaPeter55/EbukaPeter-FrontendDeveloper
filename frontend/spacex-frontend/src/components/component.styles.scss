@@ -1,3 +1,25 @@
+.spacex-herowrapper{
+  background: url("../assets/hero-backgound.jpg");
+  padding-bottom: 6rem;
+
+  &__content{
+    color: #ffffff;
+    text-align: center;
+
+    h1{
+      font-size: 2.75rem;
+      font-weight: 600;
+    line-height: 3.5rem;
+
+    }
+
+    p{
+      font-size: 1.3rem;
+    }
+  }
+}
+
+
 .spacex-container {
   .spacexdata-wrapper {
     max-width: 65rem;
@@ -171,5 +193,12 @@
         }
       }
     }
+  }
+}
+
+@media (min-width: 768px) {
+  form{
+    // margin: 0 auto;
+      // max-width: 80rem/* 384px */;
   }
 }
