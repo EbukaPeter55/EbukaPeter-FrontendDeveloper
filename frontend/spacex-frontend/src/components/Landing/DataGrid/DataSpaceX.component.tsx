@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "../../../components/component.styles.scss";
-import { fetchSpaceXData, fetchSpaceXDataDetails } from "../../../redux/capsule";
+import { fetchSpaceXData, fetchSpaceXDataDetails, getCurrentPage } from "../../../redux/capsule";
 import { Capsule } from "../../../redux/types/capsules";
 import { CAPSULES } from "./data";
 
@@ -13,6 +13,7 @@ interface CapsuleProps {
 
 const DataSpaceX: FC<CapsuleProps> = ({ capsules, currentPage, onPageChange }) => {
   console.log('capsule', capsules);
+  console.log('current page', currentPage);
   const [openModal, setOpenModal] = useState<boolean>(false);
   const capsulesPerPage = 10;
   // const [currentPage, setCurrentPage] = useState(1);
@@ -44,6 +45,10 @@ const DataSpaceX: FC<CapsuleProps> = ({ capsules, currentPage, onPageChange }) =
     console.log("capsule data", capsule);
   }, [capsule]);
 
+  useEffect(()=>{
+    console.log('capsules', capsules);
+  },[capsules])
+
   const startIndex = (currentPage - 1) * capsulesPerPage;
   const endIndex = Math.min(startIndex + capsulesPerPage, capsules?.docs?.length);
   const totalPages = capsules?.totalPages;
@@ -60,12 +65,13 @@ const DataSpaceX: FC<CapsuleProps> = ({ capsules, currentPage, onPageChange }) =
   const handlePageChange = (pageNumber: number) => {
     onPageChange(pageNumber);
     // Fetch data for the selected page
+    dispatch(getCurrentPage(pageNumber))
     dispatch(fetchSpaceXData(capsulesPerPage, pageNumber, searchCriteria));
-    
+    console.log('paginated capsule', capsules, pageNumber, currentPage);
   };
 
   return (
-    <section className="spacex-container">
+    <section className="spacex-container w-full">
       {openModal ? (
         <>
           <div className="deletemodaloverlay"></div>
@@ -107,12 +113,16 @@ const DataSpaceX: FC<CapsuleProps> = ({ capsules, currentPage, onPageChange }) =
       )}
       <div className="spacexdata-wrapper">
         {loading ? (
-          <div className="spacexdata-wrapper__loadingspinnger">
+          <div className="spacexdata-wrapper__loadingspinnger flex justify-content-center w-full">
             <p>Loading...</p>
           </div>
         ) : (
+          !capsules?.docs || capsules?.docs.length < 1
+          ?
+          <h6 className="text-center">No data found</h6>
+          :
           Array.isArray(capsules?.docs) &&
-          capsules?.docs.slice(startIndex, endIndex).map((capsule: any, index: number) => (
+          capsules?.docs.map((capsule: any, index: number) => (
             <div
               key={index}
               className="spacexdata-wrapper__card"

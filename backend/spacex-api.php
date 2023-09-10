@@ -1,7 +1,7 @@
 <?php
 // Allow requests from your React app's origin
 $allowed_origins = [
-    "http://localhost:5173/",  // Replace with the actual origin of your React app
+    "http://localhost:5173",  // Replace with the actual origin of your React app
     // Add other allowed origins as needed
 ];
 

@@ -7,12 +7,14 @@ interface CapsuleState {
   capsules: any[];
   capsule: any;
   loading: boolean;
+  currentPage?: number;
 }
 
 const initialState: CapsuleState = {
   capsules: [],
   capsule: {},
   loading: false,
+  currentPage: 1
 };
 
 const capsule = createSlice({
@@ -39,10 +41,15 @@ const capsule = createSlice({
     getCapsuleFail: (state) => {
       state.loading = false;
     },
+    getCurrentPage: (state, action: PayloadAction<number>) => {
+      state.currentPage = action.payload;
+    },
+    
   },
 });
 
-export const { getCapsules, getCapsulesSuccess, getCapsulesFail, getCapsule, getCapsuleSuccess, getCapsuleFail } = capsule.actions;
+
+export const {getCurrentPage, getCapsules, getCapsulesSuccess, getCapsulesFail, getCapsule, getCapsuleSuccess, getCapsuleFail } = capsule.actions;
 
 // export const fetchSpaceXData = (limit: number, page: number, searchCriteria: any): AppThunk => async (dispatch: any) => {
 //   dispatch(getCapsules()); // Dispatch the loading action
@@ -87,7 +94,7 @@ export const fetchSpaceXData = (limit: number, page: number, searchCriteria: any
     // Construct the URL without the search criteria if nothing is selected
     let url = `${BASE_URL}?limit=${limit}&page=${page}`;
 
-    const { status, type, original_launch } = searchCriteria;
+    const { status, type, serial } = searchCriteria;
 
     // Create an object to store the selected search criteria
     const selectedCriteria: any = {};
@@ -99,8 +106,8 @@ export const fetchSpaceXData = (limit: number, page: number, searchCriteria: any
     if (type) {
       selectedCriteria.type = type;
     }
-    if (original_launch) {
-      selectedCriteria.original_launch = original_launch;
+    if (serial) {
+      selectedCriteria.serial = serial;
     }
 
     // Check if there are any selected search criteria

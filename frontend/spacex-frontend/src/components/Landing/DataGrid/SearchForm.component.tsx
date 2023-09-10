@@ -1,20 +1,21 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchSpaceXData } from '../../../redux/capsule';
-import DataSpaceX from './DataSpaceX.component';
+import { fetchSpaceXData, getCurrentPage } from "../../../redux/capsule";
+import DataSpaceX from "./DataSpaceX.component";
 import "../../../components/component.styles.scss";
 
 const SearchForm = () => {
-    const capsulesPerPage = 10;
-  const [currentPage, setCurrentPage] = useState(1);
+  const capsulesPerPage = 10;
+  const currentPage = useSelector((state: any) => state.capsule.currentPage);
   const capsules = useSelector((state: any) => state.capsule.capsules);
   const capsule = useSelector((state: any) => state.capsule.capsule);
   const loading = useSelector((state: any) => state.capsule.loading);
   const [searchCriteria, setSearchCriteria] = useState({
     status: "",
     type: "",
-    original_launch: "",
+    serial: "",
   });
+  let serialList = capsules.docs?.map((capsule: any) => capsule.serial);
 
   const handleSearchInputChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -28,29 +29,23 @@ const SearchForm = () => {
   };
 
   const handlePageChange = (newPage: number) => {
-    setCurrentPage(newPage);
-  };  
-  
+    dispatch(getCurrentPage(newPage));
+  };
+
   const dispatch: any = useDispatch();
   useEffect(() => {
     // Dispatch the fetchSpaceXData thunk when the component mounts
     dispatch(fetchSpaceXData(capsulesPerPage, currentPage, searchCriteria))
-    .then((response:any)=>{
-        console.log('Response data', response);
-    })
-    .catch((error:any)=>{
-        console.error("error", error);
-    })
+      .then((response: any) => {})
+      .catch((error: any) => {});
   }, [dispatch, currentPage, searchCriteria]); // Include currentPage in the dependency array
 
-  useEffect(() => {
-    console.log("capsule data", capsules);
-  }, [capsules]);
+  useEffect(() => {}, [capsules, currentPage]);
 
-    return (
-        <section className='w-full'>
-        <h2 className='text-center font-bold text-3xl'>Search Capsules</h2>
-        <div className="flex mx-auto md:flex-row md:items-center md:justify-center max-w-[60rem] mt-4">
+  return (
+    <section className="w-full">
+      <h2 className="text-center font-bold text-3xl">Search Capsules</h2>
+      <div className="flex mx-auto md:flex-row md:items-center md:justify-center max-w-[60rem] mt-4">
         <form onSubmit={handleSearchSubmit} className="relative w-full">
           <div className="flex space-x-2 flex-wrap justify-center ">
             <div className="flex-1">
@@ -69,14 +64,17 @@ const SearchForm = () => {
             </div>
             <div className="relative flex-1">
               <select
-                name="original_launch"
-                value={searchCriteria.original_launch}
+                name="serial"
+                value={searchCriteria.serial}
                 onChange={handleSearchInputChange}
                 className="border py-2 px-4 appearance-none focus:outline-none focus:ring focus:border-blue-500 w-full"
               >
-                <option value="">Original Launch</option>
-                <option value="2010-12-08T15:43:00.000Z">2010-12-08T15:43:00.000Z</option>
-                <option value="2010-12-08T15:43:00.000Z">2010-12-08T15:43:00.000Z</option>
+                <option value="">Serial</option>
+                {serialList?.map((serial: any, index: number) => (
+                  <option key={index} value={serial}>
+                    {serial}
+                  </option>
+                ))}
               </select>
             </div>
             <div className="relative flex-1">
@@ -86,7 +84,7 @@ const SearchForm = () => {
                 onChange={handleSearchInputChange}
                 className="border py-2 px-4 appearance-none focus:outline-none focus:ring focus:border-blue-500 w-full"
                 data-testid="status-input"
-             >
+              >
                 <option value="">Type</option>
                 <option value="Dragon 1.0">Dragon 1.0</option>
                 <option value="Dragon 1.1">Dragon 1.1</option>
@@ -96,22 +94,22 @@ const SearchForm = () => {
               <button
                 type="submit"
                 data-testid="submit-button"
-                className="bg-[#020528] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+                className="bg-[#020528] hover:bg-[#005288] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
               >
                 Search
               </button>
             </div>
           </div>
         </form>
-        </div>
+      </div>
 
-        <DataSpaceX
+      <DataSpaceX
         capsules={capsules}
         currentPage={currentPage}
         onPageChange={handlePageChange}
-        />
+      />
     </section>
-    )
-}
+  );
+};
 
 export default SearchForm;
