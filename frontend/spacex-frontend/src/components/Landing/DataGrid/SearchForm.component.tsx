@@ -107,6 +107,8 @@ const SearchForm = () => {
         capsules={capsules}
         currentPage={currentPage}
         onPageChange={handlePageChange}
+        setSearchCriteria={setSearchCriteria}
+        searchCriteria={searchCriteria}
       />
     </section>
   );

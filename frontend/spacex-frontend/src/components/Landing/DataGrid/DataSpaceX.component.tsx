@@ -3,56 +3,54 @@ import { useDispatch, useSelector } from "react-redux";
 import "../../../components/component.styles.scss";
 import { fetchSpaceXData, fetchSpaceXDataDetails, getCurrentPage } from "../../../redux/capsule";
 import { Capsule } from "../../../redux/types/capsules";
-import { CAPSULES } from "./data";
 
 interface CapsuleProps {
   capsules: Capsule;
   currentPage:number;
   onPageChange:(newPage: number)=> void;
+  setSearchCriteria: (criterial:any) => void;
+  searchCriteria: {
+    status: string,
+    type: string,
+    serial: string
+  }
 }
 
-const DataSpaceX: FC<CapsuleProps> = ({ capsules, currentPage, onPageChange }) => {
-  console.log('capsule', capsules);
-  console.log('current page', currentPage);
+const DataSpaceX: FC<CapsuleProps> = ({ capsules, currentPage, onPageChange, setSearchCriteria, searchCriteria }) => {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const capsulesPerPage = 10;
   // const [currentPage, setCurrentPage] = useState(1);
   const capsule = useSelector((state: any) => state.capsule.capsule);
   const loading = useSelector((state: any) => state.capsule.loading);
-  const [searchCriteria, setSearchCriteria] = useState({
-    status: "",
-    type: "",
-    original_launch: "",
-  });
+  // const [searchCriteria, setSearchCriteria] = useState({
+  //   status: "",
+  //   type: "",
+  //   original_launch: "",
+  // });
 
   const dispatch: any = useDispatch();
   let capsuleId = "";
 
-  const handleSearchInputChange = (e: any) => {
-    const { name, value } = e.target;
-    setSearchCriteria({ ...searchCriteria, [name]: value });
-  };
+  // const handleSearchInputChange = (e: any) => {
+  //   const { name, value } = e.target;
+  //   setSearchCriteria({ ...searchCriteria, [name]: value });
+  // };
 
   const handleOpenModal = (capsule_id: string) => {
-    console.log("capsule id", capsule_id);
-    console.log('capsule', capsule)
     capsuleId = capsule_id;
     dispatch(fetchSpaceXDataDetails(capsule_id));
     setOpenModal(true);
   };
 
   useEffect(() => {
-    console.log("capsule data", capsule);
   }, [capsule]);
 
   useEffect(()=>{
-    console.log('capsules', capsules);
   },[capsules])
 
   const startIndex = (currentPage - 1) * capsulesPerPage;
   const endIndex = Math.min(startIndex + capsulesPerPage, capsules?.docs?.length);
   const totalPages = capsules?.totalPages;
-  console.log('totalpage', totalPages);
 
   const getPageNumbers = () => {
     const pageNumbers = [];
@@ -67,7 +65,11 @@ const DataSpaceX: FC<CapsuleProps> = ({ capsules, currentPage, onPageChange }) =
     // Fetch data for the selected page
     dispatch(getCurrentPage(pageNumber))
     dispatch(fetchSpaceXData(capsulesPerPage, pageNumber, searchCriteria));
-    console.log('paginated capsule', capsules, pageNumber, currentPage);
+    setSearchCriteria({
+      status: "",
+      type: "",
+      serial: ""
+    })
   };
 
   return (

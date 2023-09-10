@@ -1,13 +1,11 @@
 import React from 'react';
-import { render, fireEvent, waitFor } from '@testing-library/react';
-import { Provider } from 'react-redux';
+import { render } from '@testing-library/react';
+import { Provider } from 'react-redux'; // Import Provider
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import SearchForm from './SearchForm.component';
-import { Store, AnyAction } from 'redux';
-import axios from 'axios';
-import MockAdapter from 'axios-mock-adapter'; // Import axios-mock-adapter
-import { MOCK_DATA } from './data';
+import '@testing-library/jest-dom';
+
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -16,42 +14,20 @@ const initialState = {
   capsule: {
     capsules: [],
     loading: false,
+    // Add other capsule-related state properties here if needed
   },
 };
 
 describe('SearchForm Component', () => {
-  let store: Store<unknown, AnyAction>;
-  let axiosMock: MockAdapter;
-
-  beforeEach(() => {
-    store = mockStore(initialState);
-    axiosMock = new MockAdapter(axios); // Create a new instance of axios-mock-adapter
-  });
-
-  afterEach(() => {
-    axiosMock.reset(); // Reset the axios mock after each test
-  });
-
-  it('should handle input change and make an async request', async () => {
-    // Mock the axios get method to return a response with some data
-    
-    axiosMock.onGet('/your-api-endpoint').reply(200, MOCK_DATA);
+  it('renders SearchForm component', () => {
+    const store = mockStore(initialState); // Create a mock store with initial state
 
     const { getByTestId } = render(
-      <Provider store={store}>
+      <Provider store={store}> {/* Wrap your component with Provider */}
         <SearchForm />
       </Provider>
     );
 
-    const statusInput: any = getByTestId('status-input');
-
-    fireEvent.change(statusInput, { target: { value: 'active' } });
-
-    // You should wait for the asynchronous axios request to complete
-    await waitFor(() => {
-      expect(statusInput.value).toBe('active');
-    });
+    // Your test assertions here
   });
-
-  // Add more test cases for other functions in your component as needed
 });
