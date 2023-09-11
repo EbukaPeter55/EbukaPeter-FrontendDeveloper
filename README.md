@@ -1,5 +1,12 @@
 ## This is a Full stack application for Brainstorm force Senior frontend developer interview.
 
+The application uses the spacex third party API to send and receive capsules data.
+
+## Features
+1. Fetching of capsules from the space,
+2. Ability to search for capsules based on serial number, type and status.
+3. Pagination feature built with vanilla javascript and React.
+
 ## Tech stack
 ### The following technologies were used:
 1. Reactjs (Frontend),
