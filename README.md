@@ -2,6 +2,9 @@
 
 The application uses the spacex third party API to send and receive capsules data.
 
+## Video Link to the working application
+https://drive.google.com/file/d/1eFpUXLiazAaKDRbfTk3ef3MO2FariULk/view?usp=sharing
+
 ## Features
 1. Fetching of capsules from the space,
 2. Ability to search for capsules based on serial number, type and status.
