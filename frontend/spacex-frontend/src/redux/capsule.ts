@@ -86,7 +86,6 @@ export const fetchSpaceXData =
       const response = await axios.get(url);
       dispatch(getCapsulesSuccess(response.data));
     } catch (error) {
-      console.error(error);
       dispatch(getCapsulesFail());
     }
   };
@@ -99,7 +98,6 @@ export const fetchSpaceXDataDetails =
       const response = await axios.get(`${BASE_URL}?id=${capsuleId}`);
       dispatch(getCapsuleSuccess(response.data));
     } catch (error) {
-      console.error(error);
       dispatch(getCapsuleFail());
     }
   };
