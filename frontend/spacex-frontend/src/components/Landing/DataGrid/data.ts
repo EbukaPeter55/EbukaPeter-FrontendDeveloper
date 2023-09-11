@@ -1,4 +1,4 @@
-import { Capsule } from "../../../redux/types/capsules"
+import { MockData } from "../../../redux/types/capsules"
 
 export const CAPSULES = [
     [
@@ -305,10 +305,8 @@ export const CAPSULES = [
         }
       ]
 ]
-// "@types/jest": "^27.4.0",
 
-export const MOCK_DATA:any = {
- data: {
+export const MOCK_DATA: MockData = {
     "docs": [
         {
             "reuse_count": 0,
@@ -455,5 +453,4 @@ export const MOCK_DATA:any = {
     "hasNextPage": true,
     "prevPage": null,
     "nextPage": 2
-}
 }

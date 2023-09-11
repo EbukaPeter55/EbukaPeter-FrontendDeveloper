@@ -13,7 +13,6 @@ const Landing = () => {
         <HeroSection />
         <DataGridSection />
       </div>
-
       <Footer />
     </div>
   );

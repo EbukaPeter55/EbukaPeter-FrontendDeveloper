@@ -8,8 +8,6 @@ const SearchForm = () => {
   const capsulesPerPage = 10;
   const currentPage = useSelector((state: any) => state.capsule.currentPage);
   const capsules = useSelector((state: any) => state.capsule.capsules);
-  const capsule = useSelector((state: any) => state.capsule.capsule);
-  const loading = useSelector((state: any) => state.capsule.loading);
   const [searchCriteria, setSearchCriteria] = useState({
     status: "",
     type: "",
@@ -24,7 +22,6 @@ const SearchForm = () => {
 
   const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Dispatch the fetchSpaceXData action with the search criteria
     dispatch(fetchSpaceXData(capsulesPerPage, currentPage, searchCriteria));
   };
 
@@ -34,11 +31,10 @@ const SearchForm = () => {
 
   const dispatch: any = useDispatch();
   useEffect(() => {
-    // Dispatch the fetchSpaceXData thunk when the component mounts
     dispatch(fetchSpaceXData(capsulesPerPage, currentPage, searchCriteria))
       .then((response: any) => {})
       .catch((error: any) => {});
-  }, [dispatch, currentPage, searchCriteria]); // Include currentPage in the dependency array
+  }, [dispatch, currentPage, searchCriteria]);
 
   useEffect(() => {}, [capsules, currentPage]);
 
@@ -54,6 +50,7 @@ const SearchForm = () => {
                 value={searchCriteria.status}
                 onChange={handleSearchInputChange}
                 className="border rounded-l py-2 px-4 appearance-none focus:outline-none focus:ring focus:border-blue-500 w-full"
+                data-testid="status-input"
               >
                 <option value="">Status</option>
                 <option value="active">Active</option>
@@ -68,6 +65,7 @@ const SearchForm = () => {
                 value={searchCriteria.serial}
                 onChange={handleSearchInputChange}
                 className="border py-2 px-4 appearance-none focus:outline-none focus:ring focus:border-blue-500 w-full"
+                data-testid="serial-input"
               >
                 <option value="">Serial</option>
                 {serialList?.map((serial: any, index: number) => (
@@ -83,7 +81,7 @@ const SearchForm = () => {
                 value={searchCriteria.type}
                 onChange={handleSearchInputChange}
                 className="border py-2 px-4 appearance-none focus:outline-none focus:ring focus:border-blue-500 w-full"
-                data-testid="status-input"
+                data-testid="type-input"
               >
                 <option value="">Type</option>
                 <option value="Dragon 1.0">Dragon 1.0</option>
