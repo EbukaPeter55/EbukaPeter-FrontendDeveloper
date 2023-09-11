@@ -1,9 +1,8 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import capsuleReducer from '../capsule';
-
+import capsuleReducer from "../capsule";
 
 const rootReducer = combineReducers({
-  capsule: capsuleReducer
+  capsule: capsuleReducer,
 });
 
 export default rootReducer;

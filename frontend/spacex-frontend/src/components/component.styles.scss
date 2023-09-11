@@ -1,24 +1,34 @@
-.spacex-herowrapper{
+.container-spacex {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  .content {
+    width: 100%;
+    flex: 1;
+  }
+}
+
+.spacex-herowrapper {
   background: url("../assets/hero-backgound.jpg");
   padding-bottom: 6rem;
 
-  &__content{
+  &__content {
     color: #ffffff;
     text-align: center;
 
-    h1{
+    h1 {
       font-size: 2.75rem;
       font-weight: 600;
-    line-height: 3.5rem;
-
+      line-height: 3.5rem;
     }
 
-    p{
+    p {
       font-size: 1.3rem;
     }
   }
 }
-
 
 .spacex-container {
   .spacexdata-wrapper {
@@ -61,7 +71,7 @@
         .active-status {
           background: #90ee90;
         }
-        .unkown-satatus {
+        .unknown-status {
           background: #808080;
         }
         .retired-status {
@@ -121,6 +131,8 @@
   }
 
   .deleteModal {
+    width: 100%;
+    max-width: 25rem;
     position: fixed;
     top: 25%;
     left: 50%;
@@ -145,9 +157,9 @@
 
       &--cancelbutton {
         background: #ffffff;
-        border: 1px solid #10b2b4;
+        border: 1px solid #005288;
         border-radius: 5px;
-        color: linear-gradient(180deg, #10b2b4 35.61%, #0970aa 209.65%);
+        color: linear-gradient(180deg, #005288 35.61%, #0970aa 209.65%);
         padding: 0.5rem 1.5rem;
         cursor: pointer;
       }
@@ -196,9 +208,8 @@
   }
 }
 
-@media (min-width: 768px) {
-  form{
-    // margin: 0 auto;
-      // max-width: 80rem/* 384px */;
+@media (max-width: 408px) {
+  .deleteModal {
+    max-width: unset !important;
   }
 }
